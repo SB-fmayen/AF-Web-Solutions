@@ -6,7 +6,7 @@ export function Preloader() {
       <div className="text-center animate-fade-in-up">
         <div className="inline-flex items-center gap-3 text-3xl font-bold font-headline text-primary">
           <Logo className="w-10 h-10" />
-          WebCraft Studio
+          AF_Web_Solutions_Servicios
         </div>
         <div className="mt-6 h-2 w-48 mx-auto bg-muted rounded-full overflow-hidden">
             <div className="h-full bg-primary animate-loading-bar"></div>

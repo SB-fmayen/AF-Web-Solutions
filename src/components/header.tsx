@@ -41,7 +41,7 @@ export function Header() {
         <Link href="#inicio" className="flex items-center gap-2">
           <Logo className="h-8 w-8 text-primary" />
           <span className="text-xl font-bold font-headline text-foreground">
-            WebCraft Studio
+            AF_Web_Solutions_Servicios
           </span>
         </Link>
         <nav className="hidden md:flex items-center gap-6">
@@ -73,7 +73,7 @@ export function Header() {
                 <div className="flex items-center justify-between p-4 border-b">
                    <Link href="#inicio" className="flex items-center gap-2" onClick={() => setMobileMenuOpen(false)}>
                       <Logo className="h-6 w-6 text-primary" />
-                      <span className="font-bold font-headline">WebCraft Studio</span>
+                      <span className="font-bold font-headline">AF_Web_Solutions_Servicios</span>
                     </Link>
                     <SheetTrigger asChild>
                         <Button variant="ghost" size="icon">

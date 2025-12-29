@@ -5,7 +5,7 @@ import './globals.css';
 import { FirebaseClientProvider } from '@/firebase/client-provider';
 
 export const metadata: Metadata = {
-  title: 'WebCraft Studio',
+  title: 'AF_Web_Solutions_Servicios',
   description: 'Creación de páginas web profesionales.',
 };
 

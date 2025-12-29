@@ -12,11 +12,11 @@ export function Footer() {
           <div className="flex items-center gap-2">
             <Logo className="h-8 w-8 text-primary" />
             <span className="text-lg font-bold font-headline text-foreground">
-              WebCraft Studio
+              AF_Web_Solutions_Servicios
             </span>
           </div>
           <p className="text-sm text-muted-foreground">
-            &copy; {currentYear} WebCraft Studio. Todos los derechos reservados.
+            &copy; {currentYear} AF_Web_Solutions_Servicios. Todos los derechos reservados.
           </p>
           <div className="flex items-center gap-4">
             <Link
