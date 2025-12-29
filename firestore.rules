@@ -1,0 +1,86 @@
+/**
+ * Core Philosophy: This ruleset establishes a public-facing information model combined
+ * with a secure "dropbox" for user submissions. The primary goal is to make marketing
+ * and portfolio content publicly readable while ensuring that only administrators (via
+ * the Firebase Console or a trusted server environment) can manage this content. User-submitted
+ * data is write-only for clients to protect privacy.
+ *
+ * Data Structure: The data is organized into three distinct, top-level collections:
+ * - /website_packages: Publicly readable content detailing service offerings.
+ * - /portfolio_projects: Publicly readable content showcasing past work.
+ * - /contact_form_submissions: A write-only collection for incoming user inquiries.
+ *
+ * Key Security Decisions:
+ * - Public Content Lockdown: All write operations (create, update, delete) on the
+ *   `website_packages` and `portfolio_projects` collections are disallowed from the
+ *   client. This enforces a secure content management workflow where data is only
+ *   changed by trusted administrative tools, not by end-users.
+ * - Submission Privacy: The `contact_form_submissions` collection is configured as a
+ *   secure dropbox. Any user (authenticated or anonymous) can create a new submission,
+ *   but no one can read, update, or delete existing submissions via the client API. This
+ *   prevents data leaks and ensures submitted information remains confidential.
+ * - No User-Specific Data: This ruleset does not manage user-owned data. All data is
+ *   either public information or privately submitted inquiries.
+ */
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // -------------------------------------------------------------------------
+    // Helper Functions
+    // -------------------------------------------------------------------------
+
+    // -------------------------------------------------------------------------
+    // Collection Rules
+    // -------------------------------------------------------------------------
+
+    /**
+     * @description Publicly readable information about website packages.
+     *   Writes are disabled to ensure content is managed only by administrators.
+     * @path /website_packages/{websitePackageId}
+     * @allow (get) Any user, signed in or not, can read a specific website package.
+     * @deny (create) No user can create a new website package from the client.
+     * @principle Public read-only data with administrative write control.
+     */
+    match /website_packages/{websitePackageId} {
+      allow get: if true;
+      allow list: if true;
+      allow create: if false;
+      allow update: if false;
+      allow delete: if false;
+    }
+
+    /**
+     * @description Publicly readable information about portfolio projects.
+     *   Writes are disabled to ensure content is managed only by administrators.
+     * @path /portfolio_projects/{portfolioProjectId}
+     * @allow (list) Any user, signed in or not, can list all portfolio projects.
+     * @deny (update) No user can update an existing portfolio project from the client.
+     * @principle Public read-only data with administrative write control.
+     */
+    match /portfolio_projects/{portfolioProjectId} {
+      allow get: if true;
+      allow list: if true;
+      allow create: if false;
+      allow update: if false;
+      allow delete: if false;
+    }
+
+    /**
+     * @description A secure "dropbox" for contact form submissions. Anyone can
+     *   submit a form, but no one can read or modify submissions to protect privacy.
+     * @path /contact_form_submissions/{contactFormSubmissionId}
+     * @allow (create) Any user, even anonymous, can create a new contact form submission.
+     * @deny (get) No user can read a contact submission, protecting submitter privacy.
+     * @deny (list) No user can list all submissions, preventing data scraping.
+     * @principle Enforces a write-only pattern for private user-submitted data.
+     */
+    match /contact_form_submissions/{contactFormSubmissionId} {
+      allow get: if false;
+      allow list: if false;
+      allow create: if true;
+      allow update: if false;
+      allow delete: if false;
+    }
+  }
+}

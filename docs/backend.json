@@ -1,0 +1,174 @@
+{
+  "entities": {
+    "WebsitePackage": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "title": "WebsitePackage",
+      "type": "object",
+      "description": "Represents a website creation package offered by WebCraft Studio.",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique identifier for the Website Package."
+        },
+        "name": {
+          "type": "string",
+          "description": "Name of the website package (e.g., Basic, Standard, Premium)."
+        },
+        "description": {
+          "type": "string",
+          "description": "Detailed description of what's included in the package."
+        },
+        "price": {
+          "type": "number",
+          "description": "Price of the website package."
+        },
+        "features": {
+          "type": "array",
+          "description": "List of features included in the package.",
+          "items": {
+            "type": "string"
+          }
+        }
+      },
+      "required": [
+        "id",
+        "name",
+        "description",
+        "price",
+        "features"
+      ]
+    },
+    "PortfolioProject": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "title": "PortfolioProject",
+      "type": "object",
+      "description": "Represents a portfolio project showcased by WebCraft Studio.",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique identifier for the Portfolio Project."
+        },
+        "title": {
+          "type": "string",
+          "description": "Title of the portfolio project."
+        },
+        "description": {
+          "type": "string",
+          "description": "Description of the portfolio project."
+        },
+        "imageUrl": {
+          "type": "string",
+          "description": "URL of the image showcasing the project.",
+          "format": "uri"
+        },
+        "projectUrl": {
+          "type": "string",
+          "description": "URL of the live project (if available).",
+          "format": "uri"
+        }
+      },
+      "required": [
+        "id",
+        "title",
+        "description",
+        "imageUrl"
+      ]
+    },
+    "ContactFormSubmission": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "title": "ContactFormSubmission",
+      "type": "object",
+      "description": "Represents a contact form submission from a user.",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique identifier for the Contact Form Submission."
+        },
+        "name": {
+          "type": "string",
+          "description": "Name of the person submitting the form."
+        },
+        "email": {
+          "type": "string",
+          "description": "Email of the person submitting the form.",
+          "format": "email"
+        },
+        "message": {
+          "type": "string",
+          "description": "The message submitted through the contact form."
+        },
+        "submissionDate": {
+          "type": "string",
+          "description": "Date and time of the form submission.",
+          "format": "date-time"
+        }
+      },
+      "required": [
+        "id",
+        "name",
+        "email",
+        "message",
+        "submissionDate"
+      ]
+    }
+  },
+  "auth": {
+    "providers": [
+      "password",
+      "anonymous"
+    ]
+  },
+  "firestore": {
+    "structure": [
+      {
+        "path": "/website_packages/{websitePackageId}",
+        "definition": {
+          "entityName": "WebsitePackage",
+          "schema": {
+            "$ref": "#/backend/entities/WebsitePackage"
+          },
+          "description": "Stores details about website packages offered by WebCraft Studio.",
+          "params": [
+            {
+              "name": "websitePackageId",
+              "description": "Unique identifier for the website package."
+            }
+          ]
+        }
+      },
+      {
+        "path": "/portfolio_projects/{portfolioProjectId}",
+        "definition": {
+          "entityName": "PortfolioProject",
+          "schema": {
+            "$ref": "#/backend/entities/PortfolioProject"
+          },
+          "description": "Stores details about portfolio projects showcased by WebCraft Studio.",
+          "params": [
+            {
+              "name": "portfolioProjectId",
+              "description": "Unique identifier for the portfolio project."
+            }
+          ]
+        }
+      },
+      {
+        "path": "/contact_form_submissions/{contactFormSubmissionId}",
+        "definition": {
+          "entityName": "ContactFormSubmission",
+          "schema": {
+            "$ref": "#/backend/entities/ContactFormSubmission"
+          },
+          "description": "Stores contact form submissions from users.",
+          "params": [
+            {
+              "name": "contactFormSubmissionId",
+              "description": "Unique identifier for the contact form submission."
+            }
+          ]
+        }
+      }
+    ],
+    "reasoning": "The Firestore structure is designed to be simple and secure, focusing on providing information about website packages, showcasing a portfolio, and managing contact form submissions. The structure prioritizes clarity and ease of management, leveraging flat collections for each entity type. It foregoes complex authorization, assuming a need for administrative access to manage the content.  Since all entities are publicly visible, Authorization Independence isn't strictly required, as there's no user-specific data access to control. However, to maintain structure and scalability, we keep entities separate.\n\n*   `website_packages`: Stores details about available website packages.\n*   `portfolio_projects`: Contains information about showcased portfolio projects.\n*   `contact_form_submissions`: Stores contact form submissions (potentially requiring stricter security rules in production to prevent spam).\n\nThis design supports straightforward `list` operations for the website packages and portfolio, fulfilling QAPs as these collections don't have granular access controls. It also allows for simple creation of new contact form submissions."
+  }
+}
