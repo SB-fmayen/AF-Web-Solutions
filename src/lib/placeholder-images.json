@@ -1,3 +1,28 @@
 {
-  "placeholderImages": []
+  "placeholderImages": [
+    {
+      "id": "portfolio-1",
+      "description": "Screenshot of a modern website for a creative agency.",
+      "imageUrl": "https://images.unsplash.com/photo-1587440871875-191322ee64b0?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw2fHx3ZWIlMjBkZXNpZ258ZW58MHx8fHwxNzY2OTE1MTQ4fDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "web design"
+    },
+    {
+      "id": "portfolio-2",
+      "description": "Screenshot of an e-commerce store for a fashion brand.",
+      "imageUrl": "https://images.unsplash.com/photo-1586880244406-556ebe35f282?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwzfHxvbmxpbmUlMjBzdG9yZXxlbnwwfHx8fDE3NjY5MDgzNDV8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "online store"
+    },
+    {
+      "id": "portfolio-3",
+      "description": "Screenshot of a professional blog or news website.",
+      "imageUrl": "https://images.unsplash.com/photo-1761311984472-fb2e35f645d0?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwyfHxibG9nJTIwaW50ZXJmYWNlfGVufDB8fHx8MTc2Njk3NDM4OXww&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "blog interface"
+    },
+    {
+      "id": "about-me",
+      "description": "Professional headshot of the web developer.",
+      "imageUrl": "https://images.unsplash.com/photo-1544168190-79c17527004f?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxMHx8cHJvZmVzc2lvbmFsJTIwcG9ydHJhaXR8ZW58MHx8fHwxNzY2ODc2MzkwfDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "professional portrait"
+    }
+  ]
 }
