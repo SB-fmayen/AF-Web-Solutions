@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import { cn } from '@/lib/utils';
 import { Toaster } from '@/components/ui/toaster';
 import './globals.css';
+import { FirebaseClientProvider } from '@/firebase/client-provider';
 
 export const metadata: Metadata = {
   title: 'WebCraft Studio',
@@ -28,7 +29,7 @@ export default function RootLayout({
           'min-h-screen bg-background font-body antialiased'
         )}
       >
-        {children}
+        <FirebaseClientProvider>{children}</FirebaseClientProvider>
         <Toaster />
       </body>
     </html>
