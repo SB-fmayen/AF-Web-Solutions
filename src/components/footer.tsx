@@ -1,6 +1,6 @@
+import Image from 'next/image';
 import Link from 'next/link';
 import { Github, Linkedin } from 'lucide-react';
-import { Logo } from '@/components/icons';
 
 export function Footer() {
   const currentYear = new Date().getFullYear();
@@ -9,14 +9,24 @@ export function Footer() {
     <footer className="bg-secondary">
       <div className="container mx-auto px-4 py-8 md:px-6">
         <div className="flex flex-col items-center justify-between gap-6 md:flex-row">
-          <div className="flex items-center gap-2">
-            <Logo className="h-8 w-8 text-primary" />
-            <span className="text-lg font-bold font-headline text-foreground">
-              AF_Web_Solutions_Servicios
-            </span>
+          <div className="flex items-center gap-3">
+            <Image 
+              src="/logos/Logo%20DAMS.png" 
+              alt="DAMS" 
+              width={1500} 
+              height={1500}
+              className="h-[200px] w-auto dark:hidden"
+            />
+            <Image 
+              src="/logos/Logo%20DAMS.png" 
+              alt="DAMS" 
+              width={1500} 
+              height={1500}
+              className="h-[200px] w-auto hidden dark:block"
+            />
           </div>
           <p className="text-sm text-muted-foreground">
-            &copy; {currentYear} AF_Web_Solutions_Servicios. Todos los derechos reservados.
+            &copy; {currentYear} DAMS. Todos los derechos reservados.
           </p>
           <div className="flex items-center gap-4">
             <Link

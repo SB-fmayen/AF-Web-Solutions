@@ -5,8 +5,8 @@ import { Preloader } from '@/components/preloader';
 import { Header } from '@/components/header';
 import { HeroSection } from '@/components/sections/hero';
 import { ServicesSection } from '@/components/sections/services';
+import { PackagesSection } from '@/components/sections/packages';
 import { PortfolioSection } from '@/components/sections/portfolio';
-import { AboutSection } from '@/components/sections/about';
 import { ContactSection } from '@/components/sections/contact';
 import { Footer } from '@/components/footer';
 
@@ -31,8 +31,8 @@ export default function Home() {
       <main className="flex-grow">
         <HeroSection />
         <ServicesSection />
+        <PackagesSection />
         <PortfolioSection />
-        <AboutSection />
         <ContactSection />
       </main>
       <Footer />

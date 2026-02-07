@@ -1,12 +1,14 @@
 import type { Metadata } from 'next';
 import { cn } from '@/lib/utils';
 import { Toaster } from '@/components/ui/toaster';
+import { CookieConsent } from '@/components/cookie-consent';
+import { ThemeProvider } from '@/components/theme-provider';
 import './globals.css';
 import { FirebaseClientProvider } from '@/firebase/client-provider';
 
 export const metadata: Metadata = {
-  title: 'AF_Web_Solutions_Servicios',
-  description: 'Creación de páginas web profesionales.',
+  title: 'DAMS | Servicios de Diseño Web Profesional',
+  description: 'Creación de páginas web profesionales, rápidas y optimizadas para tu negocio.',
 };
 
 export default function RootLayout({
@@ -20,7 +22,7 @@ export default function RootLayout({
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         <link
-          href="https://fonts.googleapis.com/css2?family=PT+Sans:wght@400;700&family=Space+Grotesk:wght@400;500;600;700&display=swap"
+          href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@500;600;700;800&display=swap"
           rel="stylesheet"
         />
       </head>
@@ -29,8 +31,11 @@ export default function RootLayout({
           'min-h-screen bg-background font-body antialiased'
         )}
       >
-        <FirebaseClientProvider>{children}</FirebaseClientProvider>
-        <Toaster />
+        <ThemeProvider>
+          <FirebaseClientProvider>{children}</FirebaseClientProvider>
+          <Toaster />
+          <CookieConsent />
+        </ThemeProvider>
       </body>
     </html>
   );

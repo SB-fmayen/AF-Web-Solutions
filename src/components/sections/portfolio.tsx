@@ -1,3 +1,6 @@
+'use client';
+
+import { useRef, useEffect } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import {
@@ -33,45 +36,86 @@ const projects = [
 ];
 
 export function PortfolioSection() {
+  const sectionRef = useRef<HTMLDivElement>(null);
+  const cardsRef = useRef<(HTMLDivElement | null)[]>([]);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry, index) => {
+          if (entry.isIntersecting) {
+            setTimeout(() => {
+              entry.target.classList.add('animate-on-scroll');
+            }, index * 150);
+            observer.unobserve(entry.target);
+          }
+        });
+      },
+      { threshold: 0.1, rootMargin: '0px 0px -50px 0px' }
+    );
+
+    if (sectionRef.current) {
+      const title = sectionRef.current.querySelector('h2');
+      const description = sectionRef.current.querySelector('p');
+      if (title) observer.observe(title);
+      if (description) observer.observe(description);
+    }
+
+    cardsRef.current.forEach((card) => {
+      if (card) observer.observe(card);
+    });
+
+    return () => observer.disconnect();
+  }, []);
+
   return (
-    <section id="portafolio" className="w-full bg-secondary py-20 md:py-28">
+    <section ref={sectionRef} id="portafolio" className="w-full py-20 md:py-28 bg-background">
       <div className="container mx-auto px-4 md:px-6">
-        <div className="text-center max-w-2xl mx-auto">
-          <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl font-headline text-primary">
-            Nuestro Trabajo
+        <div className="text-center max-w-3xl mx-auto">
+          <h2 className="text-3xl font-bold tracking-tight sm:text-4xl md:text-5xl font-headline opacity-0">
+            Portafolio
           </h2>
-          <p className="mt-4 text-muted-foreground md:text-xl">
-            Explora algunos de nuestros proyectos y descubre lo que podemos crear para ti.
+          <p className="mt-8 text-foreground md:text-xl opacity-0">
+            Proyectos recientes desarrollados para diferentes clientes.
           </p>
         </div>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mt-12">
-          {projects.map((project) => (
-            <Card key={project.title} className="overflow-hidden group transition-all duration-300 hover:shadow-2xl">
-              <CardHeader className="p-0">
-                {project.image && (
-                  <div className="aspect-video overflow-hidden">
-                    <Image
-                      src={project.image.imageUrl}
-                      alt={project.image.description}
-                      width={600}
-                      height={400}
-                      data-ai-hint={project.image.imageHint}
-                      className="object-cover w-full h-full transition-transform duration-300 group-hover:scale-105"
-                    />
-                  </div>
-                )}
-              </CardHeader>
-              <CardContent className="p-6">
-                <CardTitle className="font-headline text-xl mb-2">{project.title}</CardTitle>
-                <CardDescription>{project.description}</CardDescription>
-                <Button variant="link" asChild className="p-0 mt-4 text-accent">
-                    <Link href={project.link}>
-                        Ver proyecto
-                        <ArrowUpRight className="ml-1 h-4 w-4" />
+        
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-20">
+          {projects.map((project, index) => (
+            <div
+              key={project.title}
+              ref={(el) => {
+                if (el) cardsRef.current[index] = el;
+              }}
+              className="opacity-0"
+            >
+              <Card className="overflow-hidden group transition-all duration-300 hover:shadow-lg h-full border border-border hover:border-primary/50">
+                <CardHeader className="p-0 relative">
+                  {project.image && (
+                    <div className="aspect-video overflow-hidden relative bg-muted">
+                      <Image
+                        src={project.image.imageUrl}
+                        alt={project.image.description}
+                        width={600}
+                        height={400}
+                        data-ai-hint={project.image.imageHint}
+                        className="object-cover w-full h-full transition-transform duration-300 group-hover:scale-105"
+                      />
+                    </div>
+                  )}
+                </CardHeader>
+                <CardContent className="p-6">
+                  <CardTitle className="font-headline text-lg mb-2">{project.title}</CardTitle>
+                  <CardDescription className="text-sm">{project.description}</CardDescription>
+                  <Button variant="link" asChild className="p-0 mt-4 h-auto text-primary">
+                    <Link href={project.link} className="text-sm">
+                      Ver proyecto
+                      <ArrowUpRight className="ml-1 h-3 w-3" />
                     </Link>
-                </Button>
-              </CardContent>
-            </Card>
+                  </Button>
+                </CardContent>
+              </Card>
+            </div>
           ))}
         </div>
       </div>

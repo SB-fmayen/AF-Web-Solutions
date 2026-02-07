@@ -1,92 +1,130 @@
-import Link from 'next/link';
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
-import { Check, Store, Code, Newspaper } from 'lucide-react';
+'use client';
+
+import { useRef, useEffect, useState } from 'react';
+import { Check, Building2, School, Wrench } from 'lucide-react';
+import CardSwap, { Card as SwapCard } from '@/components/card-swap';
 
 const servicePackages = [
   {
-    icon: <Code className="h-8 w-8 text-accent" />,
-    title: 'Landing Page',
-    description: 'Perfecto para startups y campañas de marketing.',
-    price: 'Desde $499',
+    icon: <Building2 className="h-8 w-8 text-accent" />,
+    title: 'Página Web Institucional',
+    description: 'Ideal para empresas pequeñas',
     features: [
-      'Diseño único y moderno',
-      '100% Responsivo (Móvil y Escritorio)',
-      'Formulario de contacto',
-      'Optimización SEO básica',
+      'Página de Inicio',
+      'Quiénes somos',
+      'Servicios',
+      'Contacto',
     ],
+    color: 'hsl(var(--foreground))',
   },
   {
-    icon: <Newspaper className="h-8 w-8 text-accent" />,
-    title: 'Sitio Corporativo',
-    description: 'La solución completa para tu negocio.',
-    price: 'Desde $999',
+    icon: <School className="h-8 w-8 text-accent" />,
+    title: 'Página Web para Colegios',
+    description: 'Tu producto estrella',
     features: [
-      'Hasta 5 páginas (Inicio, Sobre Nosotros, etc.)',
-      'Sistema de gestión de contenido (CMS)',
-      'Blog integrado',
-      'Análisis y estadísticas',
+      'Página de Inicio',
+      'Información del colegio',
+      'Formulario de Inscripciones',
+      'Galería de fotos',
+      'Contacto',
     ],
+    color: 'hsl(var(--foreground))',
   },
   {
-    icon: <Store className="h-8 w-8 text-accent" />,
-    title: 'E-commerce',
-    description: 'Vende tus productos al mundo.',
-    price: 'Desde $1,999',
+    icon: <Wrench className="h-8 w-8 text-accent" />,
+    title: 'Mantenimiento Mensual',
+    description: 'Soporte continuo para tu sitio web',
     features: [
-      'Catálogo de productos ilimitado',
-      'Pasarelas de pago (Stripe, PayPal)',
-      'Gestión de inventario y pedidos',
-      'Diseño optimizado para la conversión',
+      'Cambios de texto',
+      'Actualizaciones',
+      'Soporte básico',
+      'Disponibilidad continua',
     ],
+    color: 'hsl(var(--foreground))',
   },
 ];
 
 export function ServicesSection() {
+  const sectionRef = useRef<HTMLDivElement>(null);
+  const [activeIndex, setActiveIndex] = useState(0);
+
+  const activeService = servicePackages[activeIndex] ?? servicePackages[0];
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry, index) => {
+          if (entry.isIntersecting) {
+            setTimeout(() => {
+              entry.target.classList.add('animate-on-scroll');
+            }, index * 100);
+            observer.unobserve(entry.target);
+          }
+        });
+      },
+      { threshold: 0.1, rootMargin: '0px 0px -50px 0px' }
+    );
+
+    if (sectionRef.current) {
+      const title = sectionRef.current.querySelector('h2');
+      const description = sectionRef.current.querySelector('p');
+      if (title) observer.observe(title);
+      if (description) observer.observe(description);
+    }
+
+    return () => observer.disconnect();
+  }, []);
+
   return (
-    <section id="servicios" className="w-full bg-background py-20 md:py-28">
+    <section ref={sectionRef} id="servicios" className="w-full py-20 md:py-28 bg-[hsl(var(--foreground))] overflow-hidden">
       <div className="container mx-auto px-4 md:px-6">
-        <div className="text-center max-w-2xl mx-auto">
-          <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl font-headline text-primary">
-            Nuestros Paquetes
-          </h2>
-          <p className="mt-4 text-muted-foreground md:text-xl">
-            Elige el plan que mejor se adapte a tus necesidades. Todos nuestros paquetes son escalables.
-          </p>
-        </div>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mt-12">
-          {servicePackages.map((pkg) => (
-            <Card key={pkg.title} className="flex flex-col shadow-lg hover:shadow-xl transition-shadow duration-300">
-              <CardHeader className="items-center text-center">
-                {pkg.icon}
-                <CardTitle className="mt-4 font-headline text-2xl">{pkg.title}</CardTitle>
-                <CardDescription className="px-6">{pkg.description}</CardDescription>
-              </CardHeader>
-              <CardContent className="flex-grow">
-                <ul className="space-y-3">
-                  {pkg.features.map((feature) => (
-                    <li key={feature} className="flex items-start">
-                      <Check className="h-5 w-5 text-green-500 mr-3 mt-1 flex-shrink-0" />
-                      <span className="text-muted-foreground">{feature}</span>
-                    </li>
-                  ))}
-                </ul>
-              </CardContent>
-              <CardFooter className="flex-col items-center">
-                <p className="text-2xl font-bold mb-4">{pkg.price}</p>
-                <Button asChild className="w-full">
-                  <Link href="#contacto">Solicitar Cotización</Link>
-                </Button>
-              </CardFooter>
-            </Card>
-          ))}
+        {/* Hero Layout with CardSwap */}
+        <div className="hidden lg:grid lg:grid-cols-2 gap-10 items-center">
+          {/* Left: Dynamic Service Info */}
+          <div key={activeService.title} className="space-y-6 swap-info">
+            <p className="text-sm uppercase tracking-[0.2em] text-[hsl(var(--background))]/60">Servicios</p>
+            <h2 className="text-3xl md:text-4xl font-bold tracking-tight text-[hsl(var(--background))] font-headline">
+              {activeService.title}
+            </h2>
+            <p className="text-lg text-[hsl(var(--background))]/70">
+              {activeService.description}
+            </p>
+            <div className="space-y-2">
+              {activeService.features.map((feature) => (
+                <div key={feature} className="flex items-center gap-2 text-[hsl(var(--background))]/90">
+                  <Check className="h-4 w-4 text-primary" />
+                  <span className="text-sm">{feature}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+          
+          {/* Right: CardSwap Component */}
+          <div className="relative h-[400px]">
+            <CardSwap
+              width={420}
+              height={300}
+              cardDistance={36}
+              verticalDistance={32}
+              delay={4000}
+              pauseOnHover={true}
+              easing="elastic"
+              onSwap={setActiveIndex}
+            >
+              {servicePackages.map((pkg, index) => (
+                <SwapCard key={index}>
+                  <div 
+                    className="h-full w-full p-8 flex items-center justify-center text-[hsl(var(--background))] rounded-2xl"
+                    style={{ backgroundColor: pkg.color }}
+                  >
+                    <h3 className="text-2xl font-semibold text-center leading-snug">
+                      {pkg.title}
+                    </h3>
+                  </div>
+                </SwapCard>
+              ))}
+            </CardSwap>
+          </div>
         </div>
       </div>
     </section>

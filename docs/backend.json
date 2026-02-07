@@ -4,7 +4,7 @@
       "$schema": "http://json-schema.org/draft-07/schema#",
       "title": "WebsitePackage",
       "type": "object",
-      "description": "Represents a website creation package offered by AF_Web_Solutions_Servicios.",
+      "description": "Represents a website creation package offered by DAMS.",
       "properties": {
         "id": {
           "type": "string",
@@ -42,7 +42,7 @@
       "$schema": "http://json-schema.org/draft-07/schema#",
       "title": "PortfolioProject",
       "type": "object",
-      "description": "Represents a portfolio project showcased by AF_Web_Solutions_Servicios.",
+      "description": "Represents a portfolio project showcased by DAMS.",
       "properties": {
         "id": {
           "type": "string",
@@ -127,7 +127,7 @@
           "schema": {
             "$ref": "#/backend/entities/WebsitePackage"
           },
-          "description": "Stores details about website packages offered by AF_Web_Solutions_Servicios.",
+          "description": "Stores details about website packages offered by DAMS.",
           "params": [
             {
               "name": "websitePackageId",
@@ -143,7 +143,7 @@
           "schema": {
             "$ref": "#/backend/entities/PortfolioProject"
           },
-          "description": "Stores details about portfolio projects showcased by AF_Web_Solutions_Servicios.",
+          "description": "Stores details about portfolio projects showcased by DAMS.",
           "params": [
             {
               "name": "portfolioProjectId",
